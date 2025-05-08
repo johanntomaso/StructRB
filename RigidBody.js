@@ -18,7 +18,21 @@ export class RigidBody {
         this.iW = i === 0 ? 0 : 1 / i;
 
         this.points = points;
+        this.transformedPointsP = this.transformPoints();
+        this.transformedPointsX = this.transformPoints();
         this.color = color;
+    }
+
+    transformPoints() {
+        const transformedPoints = [];
+        for (let point of this.points) {
+
+            let transformedPoint = point.rotateDeg(this.rotation);
+            transformedPoint = transformedPoint.added(this.position);
+            transformedPoints.push(transformedPoint);
+        }
+
+        return transformedPoints;
     }
 
     draw(ctx) {
