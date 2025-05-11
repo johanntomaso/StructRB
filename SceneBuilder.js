@@ -1,6 +1,7 @@
 // SceneBuilder.js
 import { Config } from './Config.js';
 import { Vector2 } from './Vector2.js';
+import { RigidBody } from './RigidBody.js';
 
 export class SceneBuilder {
   static buildDefaultScene(canvas) {
@@ -44,6 +45,15 @@ export class SceneBuilder {
     ];
     config.addPolygon(new Vector2(25, 400), -30, points);
 
+    return config;
+  }
+
+  static buildRigidbodyScene(canvas) {
+    const config = new Config();
+    config.setCanvas(canvas);
+
+    config.addRigidBodyBox(200, 200, 0);
+    
     return config;
   }
 }

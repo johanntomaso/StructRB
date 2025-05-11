@@ -47,9 +47,9 @@ export class RigidBody {
         if (this.points.length < 2) return;
 
         ctx.beginPath();
-        ctx.moveTo(this.transformedPoints[0].x, this.transformedPoints[0].y);
-        for (let i = 1; i < this.transformedPoints.length; i++) {
-            ctx.lineTo(this.transformedPoints[i].x, this.transformedPoints[i].y);
+        ctx.moveTo(this.transformedPointsX[0].x, this.transformedPointsX[0].y);
+        for (let i = 1; i < this.transformedPointsX.length; i++) {
+            ctx.lineTo(this.transformedPointsX[i].x, this.transformedPointsX[i].y);
         }
         ctx.closePath();
         ctx.fillStyle = this.color;

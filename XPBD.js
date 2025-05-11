@@ -20,7 +20,7 @@ export class XPBD {
     }
 
     integrate() {
-        const { particles, gravity, dts, multiplier } = this.config;
+        const { particles, rigidBodies, gravity, dts, multiplier } = this.config;
 
         for (const particle of particles) {
             const force = gravity.scaled(particle.m);
@@ -29,6 +29,26 @@ export class XPBD {
             particle.positionP = particle.positionX;
             particle.positionX = particle.positionX.added(particle.velocity.scaled(dts * multiplier));
         }
+
+        for (const rigidBody of rigidBodies) {
+            rigidBody.positionP = rigidBody.positionX;
+            rigidBody.rotationP = rigidBody.rotationX;
+
+            const force = gravity.scaled(rigidBody.m);
+            const acceleration = force.scaled(rigidBody.w);
+            rigidBody.velocity = rigidBody.velocity.added(acceleration.scaled(dts * multiplier));
+            rigidBody.positionX = rigidBody.positionX.added(rigidBody.velocity.scaled(dts * multiplier));
+
+            const torque = 0;
+            const angularAcceleration = torque * rigidBody.iW;
+            rigidBody.angularVelocity += angularAcceleration * dts;
+            rigidBody.rotationX += rigidBody.angularVelocity * dts;
+
+            rigidBody.transformedPointsP = rigidBody.transformPoints(rigidBody.positionP, rigidBody.rotationP);
+            rigidBody.transformedPointsX = rigidBody.transformPoints(rigidBody.positionX, rigidBody.rotationX);
+        }
+
+
     }
 
     solveConstraints() {
@@ -41,10 +61,16 @@ export class XPBD {
     }
 
     updateVelocities() {
-        const { particles, dts, multiplier } = this.config;
+        const { particles, rigidBodies, dts, multiplier } = this.config;
 
         for (const particle of particles) {
             particle.velocity = particle.positionX.subtracted(particle.positionP).divided(dts * multiplier);
         }
+
+        for (const rigidBody of rigidBodies) {
+            rigidBody.velocity = rigidBody.positionX.subtracted(rigidBody.positionP).divided(dts * multiplier);
+            rigidBody.angularVelocity = (rigidBody.rotationX - rigidBody.rotationP) / (dts);
+        }
+
     }
 }

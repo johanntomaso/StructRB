@@ -6,6 +6,7 @@ import { MouseDistanceConstraint } from './Constraints/MouseDistanceConstraint.j
 import { EnvironmentCollisionConstraint } from './Constraints/EnvironmentCollisionConstraint.js';
 import { Polygon } from './Polygon.js';
 import { VolumeConstraint } from './Constraints/VolumeConstraint.js';
+import { RigidBody } from './RigidBody.js';
 
 export class Config {
   constructor() {
@@ -26,6 +27,7 @@ export class Config {
     this.mouseConstraint = null;
     this.environmentCollisionConstraints = [];
     this.polygons = [];
+    this.rigidBodies = [];
   }
 
   addParticle(x, y, mass, radius, color) {
@@ -56,6 +58,18 @@ export class Config {
     const polygon = new Polygon(position, rotation, points, color);
     this.polygons.push(polygon);
     return polygon;
+  }
+
+  addRigidBodyBox(x, y, rotation, m, i, color) {
+    const points = [
+      new Vector2(-30, -30),
+      new Vector2(30, -30),
+      new Vector2(30, 30),
+      new Vector2(-30, 30)
+    ];
+    const rigidBody = new RigidBody(x, y, rotation, m, i, points, color);
+    this.rigidBodies.push(rigidBody);
+    return rigidBody;
   }
 
   setCanvas(canvas) {

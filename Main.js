@@ -16,7 +16,8 @@ window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
 //const config = SceneBuilder.buildDefaultScene(canvas);
-const config = SceneBuilder.buildEmptyScene(canvas);
+//const config = SceneBuilder.buildEmptyScene(canvas);
+const config = SceneBuilder.buildRigidbodyScene(canvas);
 const xpbd = new XPBD(config);
 const editor = new Editor(config);
 const renderer = new Renderer(config);

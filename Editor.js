@@ -28,6 +28,7 @@ export class Editor {
         document.getElementById('btn-wheel').addEventListener('click', () => this.setMode('wheel'));
         document.getElementById('btn-rod').addEventListener('click', () => this.setMode('rod'));
         document.getElementById('btn-spring').addEventListener('click', () => this.setMode('spring'));
+        document.getElementById('btn-rigidbody-box').addEventListener('click', () => this.setMode('rigidBodyBox'));
     }
 
     initInputs() {
@@ -131,6 +132,11 @@ export class Editor {
 
             case 'drag':
                 this.handleDragClick(mousePos, 0.005, 15, '#16B4F2');
+                break;
+
+            case 'rigidBodyBox':
+                this.config.addRigidBodyBox(x, y, 0);
+                this.soundManager.playPop();
                 break;
 
         }
