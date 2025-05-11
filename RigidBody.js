@@ -35,6 +35,16 @@ export class RigidBody {
         return transformedPoints;
     }
 
+    worldToLocal(worldPoint) {
+        const rel = worldPoint.subtracted(this.positionP);
+        return rel.rotateDeg(-this.rotationP);
+    }
+
+    localToWorld(localPoint) {
+        const rotated = localPoint.rotateDeg(this.rotationP);
+        return rotated.added(this.positionP);
+    }
+
     draw(ctx) {
         if (this.points.length < 2) return;
 
