@@ -49,6 +49,4 @@ export class DistanceConstraint {
         ctx.lineTo(this.particleB.positionX.x, this.particleB.positionX.y);
         ctx.stroke();
     }
-
-
 }

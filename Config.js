@@ -2,6 +2,7 @@
 import { Vector2 } from './Vector2.js';
 import { Particle } from './Particle.js';
 import { DistanceConstraint } from './Constraints/DistanceConstraint.js';
+import { RigidBodyDistanceConstraint } from './Constraints/RigidBodyDistanceConstraint.js';
 import { MouseDistanceConstraint } from './Constraints/MouseDistanceConstraint.js';
 import { EnvironmentCollisionConstraint } from './Constraints/EnvironmentCollisionConstraint.js';
 import { Polygon } from './Polygon.js';
@@ -24,6 +25,7 @@ export class Config {
 
     this.particles = [];
     this.constraints = [];
+    this.rigidBodyDistanceConstraints = [];
     this.mouseConstraint = null;
     this.environmentCollisionConstraints = [];
     this.polygons = [];
@@ -39,6 +41,12 @@ export class Config {
   addDistanceConstraint(p1, p2, stiffness, damping, color) {
     const constraint = new DistanceConstraint(p1, p2, stiffness, damping, this, color);
     this.constraints.push(constraint);
+    return constraint;
+  }
+
+  addRigidBodyDistanceConstraint(rigidBodyA, rigidBodyB, positionGlobalA, positionGlobalB, stiffness, color) {
+    const constraint = new RigidBodyDistanceConstraint(rigidBodyA, rigidBodyB, positionGlobalA, positionGlobalB, stiffness, this, color);
+    this.rigidBodyDistanceConstraints.push(constraint);
     return constraint;
   }
 
